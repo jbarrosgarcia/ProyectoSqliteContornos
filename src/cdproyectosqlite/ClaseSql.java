@@ -101,11 +101,29 @@ public class ClaseSql {
         return total;
     }
 
-    public void borrar(String tabla, String... values) {
+    public void borrar(String id) {
+        try {
+            consulta= cn.createStatement();
+            consulta.execute("DELETE from agenda where id ='" + id + "'");
+            total = consulta.getUpdateCount();
+            System.out.println("Registros borrados " + total);
+        } catch (SQLException ex) {
+            System.err.println("Error al borrar " + ex.getMessage());
+}
 
     }
 
-    public void modificar() {
+   public void modificar(String nombre, String apellido, String telefono, String id) {
+
+        try {
+            PreparedStatement modificacion = cn.prepareStatement("update agenda set nombre ='" + nombre + "',apellidos ='" + apellido + "', telefono ='" + telefono + "' where id=" + id);
+            modificacion.execute();
+
+            total = modificacion.getUpdateCount();
+            System.out.println("Datos actualizados " + total);
+        } catch (SQLException ex) {
+            System.err.println("Error al actualizar " + ex.getMessage());
+        }
 
     }
 }
